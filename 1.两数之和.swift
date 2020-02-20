@@ -7,11 +7,13 @@
 // @lc code=start
 class Solution {
     func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
-        for i in 0..<nums.count {
-            for j in (i+1)..<nums.count{
-                if nums[i] + nums[j] == target {
-                    return [i, j]
-                }
+        var map = [Int:Int]()
+        map[nums[0]] = 0
+        for i in 1..<nums.count {
+            if let index = map[target - nums[i]] {
+                return [index, i]
+            }else{
+                map[nums[i]] = i
             }
         }
         return [0, 0]
