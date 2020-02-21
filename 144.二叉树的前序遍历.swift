@@ -20,18 +20,29 @@
  */
 class Solution {
     func preorderTraversal(_ root: TreeNode?) -> [Int] {
-        var result = [Int]()
-        preorderTraversal(root, result: &result)
-        return result
-    }
-    
-    func preorderTraversal(_ node: TreeNode?, result: inout [Int]){
-        guard let node = node else{
-            return
+        guard let root = root else{
+            return [Int]();
         }
-        result.append(node.val)
-        preorderTraversal(node.left, result: &result)
-        preorderTraversal(node.right, result: &result)
+        var stack = Array<TreeNode>()
+        
+        var result = [Int]()
+        stack.append(root)
+        while(stack.count > 0){
+            let node = stack.removeLast()
+            result.append(node.val)
+            
+            if let right = node.right{
+                stack.append(right)
+            }
+            
+            if let left = node.left{
+                stack.append(left)
+            }
+            
+            
+        }
+        
+        return result
     }
 }
 // @lc code=end
