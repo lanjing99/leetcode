@@ -24,22 +24,30 @@ class Node {
 };
 */
 class Solution {
-    public List<Integer> postorder(Node node) {
+    public List<Integer> postorder(Node root) {
         List<Integer> result = new ArrayList<>();
-        helper(node, result);
+        Set<Node> visitedNode = new HashSet<>();
+        if(root == null){
+            return result;
+        }
+
+        Stack<Node> stack = new Stack<>();
+        stack.add(root);
+        while(stack.isEmpty() == false){
+            Node node = stack.peek();
+            if(node.children.size() == 0 || visitedNode.contains(node)){
+                result.add(node.val);
+                stack.pop();
+            }else{
+                visitedNode.add(node);
+                for(int i = node.children.size() - 1; i >= 0; i--){
+                    stack.push(node.children.get(i));
+                }
+            }
+        }
         return result;
     }
 
-    private void helper(Node node, List<Integer> result){
-        if(node == null){
-            return;
-        }
-
-        for(Node n: node.children){
-            helper(n, result);
-        }
-        result.add(node.val);
-    }
 }
 // @lc code=end
 
