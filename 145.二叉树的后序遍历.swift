@@ -20,19 +20,33 @@
  */
 class Solution {
     func postorderTraversal(_ root: TreeNode?) -> [Int] {
-        var result = [Int]()
-        postorderTraversal(root, result: &result)
-        return result
-    }
-    
-    func postorderTraversal(_ node: TreeNode?, result: inout [Int]){
-        guard let node = node else{
-            return
+        guard let root = root else{
+            return [Int]();
         }
+        var stack = Array<TreeNode>()
+        var visitedSet = Set<TreeNode>()
         
-        postorderTraversal(node.left, result: &result)
-        postorderTraversal(node.right, result: &result)
-        result.append(node.val)
+        var result = [Int]()
+        stack.append(root)
+        while(stack.count > 0){
+            let node = stack.last!
+            if (node.left == nil && node.right == nil) || visitedSet.contains(node){
+                result.append(node.val)
+                stack.removeLast()
+            }else{
+                visitedSet.insert(node)
+                if let right = node.right{
+                    stack.append(right)
+                }
+                
+                if let left = node.left{
+                    stack.append(left)
+                }
+            }
+            
+            
+        }
+        return result
     }
 }
 // @lc code=end
