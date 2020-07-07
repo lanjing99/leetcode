@@ -14,13 +14,13 @@ class Solution {
             return 2
         }
         
-        var results = Array<Int>.init(repeating: 1, count: n+1)
-        results[1] = 1
-        results[2] = 2
-        for i in 2...n {
-            results[i] = results[i-1] + results[i-2]
+        var previos = 1, result = 2
+        for i in 3...n {
+            let temp = previos + result
+            previos = result
+            result = temp
         }
-        return results[n]
+        return result
     }
 }
 // @lc code=end
