@@ -10,45 +10,39 @@ import math
 
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
+
         nums.sort()
 
         result: List[List[int]] = []
-        i: int = 0
-        while i < len(nums) - 2:
-            if nums[i] > 0:
-                break
+        numsLen = len(nums)
+        for i in range(0, numsLen - 2):
+            if i != 0 and nums[i] == nums[i-1]:
+                continue
 
-            j = i + 1
-            while j < len(nums) - 1:
-                # 第一个数或者第一个数+第二个数大于0，提前退出
-                if nums[i] + nums[j] > 0:
-                    break
-                # 跳过一组重复的数据
-                if nums[j] == nums[j - 1] and j == i + 2:
-                    i += 1
-                    j += 1
+            left = i + 1
+            right = numsLen - 1
+            while left < right:
+                # 去除左边的重复
+                if left != i+1 and nums[left] == nums[left -1]:
+                    left += 1
                     continue
+                # 去除右边的重复
+                if right != numsLen - 1 and nums[right] == nums[right + 1]:
+                    right -= 1
+                    continue 
 
-                if self.binarySearch(-nums[i] - nums[j], nums, j+1, len(nums)):
-                    result.append([nums[i], nums[j], -nums[i] - nums[j]])
-                
-                j += 1
+                if -nums[i] == nums[left] + nums[right]:
+                    result.append([nums[i], nums[left], nums[right]])
+                    left += 1
+                    right -= 1
 
-            i += 1
+                elif -nums[i] > nums[left] + nums[right]:
+                    left += 1
+                else:
+                    right -= 1
+
         return result
 
-    def binarySearch(self, value: int, nums:List[int], start: int, end: int) -> bool:
-        while start < end :
-            middle: int = math.floor((start + end)/2)
-            if value == nums[middle]:
-                return True
-            elif value > nums[middle]:
-                start = middle + 1
-            else: 
-                end = middle
-        return False
 
-result = Solution().threeSum(nums=[-1,0,1,2,-1,-4])
-print(result)
 # @lc code=end
 
