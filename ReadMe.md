@@ -55,6 +55,22 @@
 ## [206] 翻转链表
 链表为空的时候要判断，一定要考虑程序的健壮性
 
+递归版本： 关键点在于下面两句的理解，看来递归的样式很多，写出来的代码很简单，过程却有点难以理解
+head.next.next = head
+head.next = None
+
+``
+def reverseList(self, head: ListNode) -> ListNode:
+        if head is None or head.next is None:
+            return head
+            
+        result = self.reverseList(head= head.next)
+        head.next.next = head
+        head.next = None
+
+        return result
+``
+
 ## [236] 二叉树的最近公共祖先
 1. 使用递归方式实现  8m
 深度优先搜索，如果一个节点和它的左右子树找到了两个节点， 则找到公共祖先节点

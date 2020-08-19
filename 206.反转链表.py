@@ -16,17 +16,11 @@ class Solution:
         if head is None or head.next is None:
             return head
             
-        result = head
-        current = result.next
-        result.next = None
-
-        while current is not None:
-            nextP = current.next
-            current.next = result
-            result = current
-            current = nextP
+        result = self.reverseList(head= head.next)
+        head.next.next = head
+        head.next = None
 
         return result
-        
+
 # @lc code=end
 
