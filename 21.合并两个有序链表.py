@@ -12,25 +12,14 @@
 #         self.next = next
 class Solution:
     def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
-        left = l1
-        right = l2
-        result: ListNode = ListNode()
-        current = result
-        
-        while left and right:
-            if left.val < right.val:
-                current.next = left
-                current = current.next
-                left = left.next
-            else:
-                current.next = right
-                current = current.next
-                right = right.next
-
-        if left:
-            current.next = left
+        if l1 == None: return l2
+        if l2 == None: return l1
+        if l1.val < l2.val:
+            l1.next = self.mergeTwoLists(l1.next, l2)
+            return l1
         else:
-            current.next = right
-        return result.next
+            l2.next = self.mergeTwoLists(l1, l2.next)
+            return l2
+
 # @lc code=end
 
