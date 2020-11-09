@@ -1,5 +1,11 @@
+## [20] 有效的括号匹配
+
+1. 使用栈来实现括号匹配。Python中没看到Stack数据结构，使用List来替代。
+2. 增加一个dic来存储括号的对应关系，可以简化代码，增加灵活性。
+3. 
 
 ## [24] 两两交换链表中的节点
+
 用递归很好理解，代码也简单，递归是个强大的工具。
 
 ## [46] 全排列
@@ -70,7 +76,7 @@ def reverseList(self, head: ListNode) -> ListNode:
         result = self.reverseList(head= head.next)
         head.next.next = head
         head.next = None
-
+    
         return result
 ``
 

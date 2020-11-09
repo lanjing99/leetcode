@@ -8,26 +8,20 @@
 class Solution:
     def isValid(self, s: str) -> bool:
         stack = []
+        dic = {'}':'{',
+               ']':'[',
+               ')':'('}
+        
         for c in s:
             if c == '(' or c == '{' or c == '[':
                 stack.append(c)
             else:
                 if len(stack) == 0:
                     return False
+                top = stack.pop()
+                if top != dic[c]:
+                    return False 
                 
-                if c == ')':
-                   top = stack.pop()
-                   if top != '(':
-                       return False
-                elif c == ']':
-                    top = stack.pop()
-                    if top != '[':
-                        return False
-                else:
-                # c == '}':
-                    top = stack.pop()
-                    if top != '{':
-                        return False
         if len(stack) == 0:
             return True
         else:
