@@ -8,24 +8,44 @@
 class Solution:
     def isValid(self, s: str) -> bool:
         stack = []
-        dic = {'}':'{',
-               ']':'[',
-               ')':'('}
+        dic = {
+            '{':'}',
+            '[':']',
+            '(':')'
+        }
         
         for c in s:
-            if c == '(' or c == '{' or c == '[':
+            if c in dic:
                 stack.append(c)
             else:
                 if len(stack) == 0:
                     return False
-                top = stack.pop()
-                if top != dic[c]:
-                    return False 
                 
-        if len(stack) == 0:
-            return True
-        else:
-            return False    
+                if dic[stack.pop()] != c:
+                    return False
+        
+        return len(stack) == 0
+        
+    # def isValid(self, s: str) -> bool:
+    #     stack = []
+    #     dic = {'}':'{',
+    #            ']':'[',
+    #            ')':'('}
+        
+    #     for c in s:
+    #         if c == '(' or c == '{' or c == '[':
+    #             stack.append(c)
+    #         else:
+    #             if len(stack) == 0:
+    #                 return False
+    #             top = stack.pop()
+    #             if top != dic[c]:
+    #                 return False 
+                
+    #     if len(stack) == 0:
+    #         return True
+    #     else:
+    #         return False    
         
 # print(Solution().isValid("{[]})"))
 # @lc code=end
