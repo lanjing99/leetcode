@@ -17,6 +17,9 @@ class Solution:
         while target < listLength - 2:
             left = target + 1
             right = listLength - 1
+            if nums[target] > 0:
+                break
+            
             # 去除重复的i
             if target > 0 and nums[target] == nums[target-1]:
                 target += 1
