@@ -7,24 +7,25 @@
 # @lc code=start
 class Solution:
     def isValid(self, s: str) -> bool:
-        stack = []
+        stack = ['?']   # 预存一个？能够去除22行的判断，提高执行效率
         dic = {
             '{':'}',
             '[':']',
-            '(':')'
+            '(':')',
+            '?':'?'
         }
         
         for c in s:
             if c in dic:
                 stack.append(c)
             else:
-                if len(stack) == 0:
-                    return False
+                # if len(stack) == 0:
+                #     return False
                 
                 if dic[stack.pop()] != c:
                     return False
         
-        return len(stack) == 0
+        return len(stack) == 1
         
     # def isValid(self, s: str) -> bool:
     #     stack = []
