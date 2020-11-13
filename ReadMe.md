@@ -68,8 +68,19 @@
 ## [94] 二叉树的中序遍历
 
 1. 使用递归方法实现 （确实比较简单）
+
    - Your runtime beats 43.47 % of python3 submissions
    - Your memory usage beats 9.32 % of python3 submissions (13.5 MB)
+
+2. 使用栈迭代方法
+
+   - Your runtime beats 43.47 % of python3 submissions
+
+   - Your memory usage beats 5.38 % of python3 submissions (13.6 MB)
+
+   迭代法的问题在于，如何标记已经访问过的左子树，我用的方法是将它的值设置为None，这样就影响到原来的值了。
+
+可见时间效率上没什么差别，只是占用内存少一些而已。
 
 ## [105] 从前序与中序遍历序列构造二叉树
 1. 递归算法，找到规模N和N-1的关系，这边是难点。

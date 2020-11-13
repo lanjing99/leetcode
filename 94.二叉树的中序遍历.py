@@ -7,23 +7,36 @@
 # @lc code=start
 # Definition for a binary tree node.
 
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+from typing import List
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
         
 class Solution:
     def inorderTraversal(self, root: TreeNode) -> List[int]:
         result = []
-        self.helper(root, result)
-        return result
+        if root is None:
+            return result
         
-    def helper(self, node: TreeNode, result:List[int]):
-        if node is None:
-            return
-        self.helper(node.left, result)
-        result.append(node.val)
-        self.helper(node.right, result)
+        stack = [root]
+        while len(stack) != 0:
+            while stack[-1].left is not None:
+                stack.append(stack[-1].left)
+                stack[-2].left = None
+                
+            top = stack.pop()
+            result.append(top.val)
+            if top.right is not None:
+                stack.append(top.right)
+        return result
+    
+
+three = TreeNode(3)
+two = TreeNode(2, three, None)    
+one = TreeNode(1, None, two)
+print(Solution().inorderTraversal(one))
 # @lc code=end
 
