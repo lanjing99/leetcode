@@ -80,15 +80,22 @@
 
 2. 使用栈迭代方法
 
-   - Your runtime beats 43.47 % of python3 submissions
+   - Your runtime beats 87.43 % of python3 submissions
+   - Your memory usage beats 88.27 % of python3 submissions (13.3 MB)
 
-   - Your memory usage beats 5.38 % of python3 submissions (13.6 MB)
+   python列表为空时，返回false，这是个语法糖的功能，不太严谨。
 
-   迭代法的问题在于，如何标记已经访问过的左子树，我用的方法是将它的值设置为None，这样就影响到原来的值了。
+   ```python
+   while p or stack:
+               while p:
+                   stack.append(p)
+                   p = p.left
+               top = stack.pop()
+               result.append(top.val)
+               p = top.right
+   ```
 
-   解决方法：使用了一个current指针来指向当前节点，每次pop之后，都操作右子树。避免了上面一直操作左子树的问题。
-
-可见时间效率上没什么差别，只是占用内存少一些而已。
+   
 
 ## [105] 从前序与中序遍历序列构造二叉树
 1. 递归算法，找到规模N和N-1的关系。确定根节点，列出左子树和右子树，递归实现比较容易。

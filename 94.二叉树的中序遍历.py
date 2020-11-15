@@ -20,21 +20,17 @@ class Solution:
         result = []
         if root is None:
             return result
+        stack = []
+        p = root
+        while p or stack:
+            while p:
+                stack.append(p)
+                p = p.left
+            top = stack.pop()
+            result.append(top.val)
+            p = top.right
+            
         
-        stack = [root]
-        current = root
-       
-        while current is not None or len(stack) != 0:
-            while current is not None and current.left is not None:
-                stack.append(current.left)
-                current = current.left
-    
-            current = stack.pop()
-            result.append(current.val)
-            current = current.right
-            if current is not None:
-                stack.append(current)
-
         return result
         
 # three = TreeNode(3)
