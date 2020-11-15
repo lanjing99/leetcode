@@ -15,28 +15,21 @@
 
 class Solution:
     def preorderTraversal(self, root: TreeNode) -> List[int]:
+        stack = []
         result = []
         if root is None:
             return result
         
-        # result.append(root.val)
-        stack = []
-        current = root
-        
-        while len(stack) > 0 or current is not None:
-            # 遍历左子树        
-            while current is not None:
-                        result.append(current.val)
-                stack.append(current)
-                current = current.left
+        p = root
+        while p is not None or len(stack) != 0:
+            while p is not None:
+                result.append(p.val)
+                stack.append(p)
+                p = p.left
                 
-            current = stack.pop()
+            top = stack.pop()    
+            p = top.right
             
-            if current.right is not None:
-                current = current.right
-            else:
-                current = None
-    
         return result
     
 # three = TreeNode(3)
