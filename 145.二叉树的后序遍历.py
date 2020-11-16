@@ -14,15 +14,29 @@
 class Solution:
     def postorderTraversal(self, root: TreeNode) -> List[int]:
         result = []
-        self.helper(root, result)
+        if root is None:
+            return result
+        
+        stack = []
+        current = root
+        # 后续遍历，要等右节点访问后才能访问根节点，用lastVisited来区分右节点是否已经访问过了
+        lastVisited = None   
+        while current or stack:
+            while current:
+                stack.append(current)
+                current = current.left
+        
+            top = stack[-1]
+            # 没有右子树，或者右子树已经访问过了
+            if top.right is None or top.right == lastVisited:
+                result.append(top.val)
+                lastVisited = top
+                stack.pop()
+                current = None
+            else:
+                current = top.right
+            
         return result
     
-    def helper(self, node: TreeNode, result: List[int]):
-        if node is None:
-            return
-        
-        self.helper(node.left, result)
-        self.helper(node.right, result)
-        result.append(node.val)
 # @lc code=end
 
