@@ -7,48 +7,36 @@
 # @lc code=start
 from typing import List
 
-class Solution:
-    columns = None
-    rowIndex = None
-    
+class Solution:  
     def solveNQueens(self, n: int) -> List[List[str]]:
-        #表示当前第n行对应的皇后在第几列
-        self.columns = [0] * n 
-        self.rowIndex = 0   #当前测试到第几行
         result = []
-        # 第一行可以测试N个位置
-        while self.columns[0] < n:
-            # 当前这些位置是否可以放皇后们
-            if self.canPutQueens():
-                if self.rowIndex == n - 1:
-                    result.append(self.queensMap(self.columns, n))
-                    self.nextPosition(n)
-                else:
-                    self.rowIndex += 1  #从下一行开始寻找合适的位置
-                    assert self.columns[self.rowIndex] == 0 # 新的一行从0开始验证
-            else:
-                self.nextPosition(n)
-        return result            
-                        
-                
-    def nextPosition(self, n):
-        self.columns[self.rowIndex] += 1
-        while  self.columns[self.rowIndex] == n and self.rowIndex > 0:
-            if self.rowIndex != 0:      # line 18 用columns[0]来判断是否结束循环，所以不能设置为0，这不是个好的方法。待优化
-                self.columns[self.rowIndex] = 0
-            self.rowIndex -= 1
-            self.columns[self.rowIndex] += 1 # 上一行的下一个位置
+        self.dfs([], 0, n, result)
+        return result
         
-    def canPutQueens(self) -> bool:
-        for i in range(0, self.rowIndex):
+    def dfs(self, columns: List[int], rowIndex: int, n: int, result:List[str]):
+        if rowIndex == n: #已经找到一个解了 rowIndex下标从0开始。
+            result.append(self.queensMap(columns, n))
+            return
+        for i in range(0, n):
+            if self.canPutQueens(columns, rowIndex, i):
+                columnsCopy = columns[:]
+                columnsCopy.append(i)
+                self.dfs(columnsCopy, rowIndex + 1, n, result)
+                
+
+             
+        
+    def canPutQueens(self, columns: List[int], row: int, column: int) -> bool:
+        assert len(columns) == row
+        for i in range(0, row):
             # 因为已经在不同的行，所以不需要判断行
             # 是否在同一列
-                if self.columns[self.rowIndex] == self.columns[i]:
+                if column == columns[i]:
                     return False
             #是否在对角线
-                if self.rowIndex + self.columns[self.rowIndex] == i + self.columns[i]:
+                if row + column == i + columns[i]:
                     return False
-                if self.rowIndex - self.columns[self.rowIndex] == i - self.columns[i]:
+                if row - column == i - columns[i]:
                     return False   
         return True
      
@@ -58,7 +46,6 @@ class Solution:
             line = "." * columns[i] + "Q" + "." * (n - columns[i] - 1)
             result.append(line)
         return result
-    
     
 # result = Solution().solveNQueens(4)   
 # print(result)          
